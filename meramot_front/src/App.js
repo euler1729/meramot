@@ -8,16 +8,18 @@ import Header from './components/header/Header';
 import Posts from './components/main/posts/index';
 import CreatePost from './components/main/createpost/CreatePost';
 import Viewpost from './components/main/viewpost/index';
+import Auth from './components/auth/Auth';
 
 function App() {
   return (
     <div className="App">
       <Router>
-        <Header/>
+        <Header />
         <Routes>
-          <Route exact path='/' element={<Posts/>} />
-          <Route path='/create-post' element={<CreatePost/>}/>
-          <Route path='/view-post' element={<Viewpost/>}/>
+          <Route exact path='/' element={<Posts />} />
+          <Route path='/create-post' element={<CreatePost />} />
+          <Route path='/view-post' element={<Viewpost />} />
+          <Route path='/auth' element={<Auth />} />
         </Routes>
       </Router>
     </div>
