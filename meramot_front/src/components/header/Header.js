@@ -1,7 +1,7 @@
 import React from 'react';
 import SearchIcon from '@mui/icons-material/Search';
 // import InboxIcon from '@mui/icons-material/Inbox';
-// import ChatIcon from '@mui/icons-material/Chat';
+import ChatIcon from '@mui/icons-material/Chat';
 import './Header.css';
 import logo from './res/logo.png';
 import { Avatar, Menu, Tooltip } from '@mui/material';
@@ -10,10 +10,10 @@ import { auth } from '../../firebase';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../app/userSlice';
 import MenuItem from '@mui/material/MenuItem';
-// import Divider from '@mui/material/Divider';
+import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
-// import PersonAdd from '@mui/icons-material/PersonAdd';
-// import Settings from '@mui/icons-material/Settings';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 import LoginIcon from '@mui/icons-material/Login';
@@ -49,7 +49,6 @@ function Header() {
           </Link>
           <h3>Products</h3>
         </div>
-
 
         <div className='header-middle'>
           <div className='header-search-container'>

@@ -5,9 +5,21 @@ import { TagsInput } from 'react-tag-input-component';
 import './CreatePost.css';
 
 function CreatePost() {
+    const [title, setTitle] = useState('');
+    const [body, setBody] = useState('');
     const [tags, setTags] = useState([]);
-    const handleChange = (newTags) => {
+
+    const handleTitleChange = (newTitle) => {
+        setTitle(newTitle);
+        console.log(title);
+    }
+    const handleBodyChange = (newBody) => {
+        setBody(newBody);
+        console.log(body);
+    }
+    const handleTagChange = (newTags) => {
         setTags(newTags);
+        console.log(tags);
     }
     return (
         <div className='create-post'>
@@ -33,6 +45,7 @@ function CreatePost() {
                                     <button className='button'>POST</button>
                                 </div>
                                 <input
+                                    onChange={handleTitleChange}
                                     type='text'
                                     placeholder='e.g. Is there an R function for finding the index of an element in a vector?'
                                 />
@@ -46,6 +59,7 @@ function CreatePost() {
                                 <h3>Body</h3>
                                 <small>Include all the information someone would need to solve your problem</small>
                                 <ReactQuill
+                                    onChange={handleBodyChange}
                                     className='react-quill'
                                     theme='snow'
                                 />
@@ -57,7 +71,7 @@ function CreatePost() {
                             <div className='title'>
                                 <h3>Tags</h3>
                                 <small>Add Tags to categorize your problem</small>
-                                <TagsInput value={tags || []} onChange={handleChange} />
+                                <TagsInput value={tags || []} onChange={handleTagChange} />
                                 {tags && tags.map((tag, index) => (<span key={index}>{tag.text}</span>))}
                             </div>
                         </div>

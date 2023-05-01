@@ -24,7 +24,7 @@ function AllPosts() {
                 
             </div>
             <div className='post-body'>
-                <Link to='/user/view-post'>How to get the complete markup for a DOM element you've created in javascript including any classes added to classList?</Link>
+                <Link to='/view-post'>How to get the complete markup for a DOM element you've created in javascript including any classes added to classList?</Link>
                 <div style={{width:"90%"}}>
                     <div>
                         Let's say you are creating an interactive tutorial in which your user is dragging and dropping DOM elements from a pallete onto a canvas. Behind the scenes you create a SPAN with createElement; add some text to it using createTextNode and appendChild; and add a class using classList.add(). Now you want to show your user what the element would look like in the HTML markup if the page were to be rendered. But you want to do this before the page is rendered. How, in the year 2023 in modern browsers, would you serialize the element to display the markup for examination before the page is rendered?

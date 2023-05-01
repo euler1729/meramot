@@ -9,16 +9,17 @@ import Posts from './components/main/posts/index';
 import CreatePost from './components/main/createpost/CreatePost';
 import Viewpost from './components/main/viewpost/index';
 import Auth from './components/auth/Auth';
-// import { useSelector } from 'react-redux';
-import { login, logout } from './app/userSlice';
+import { useSelector } from 'react-redux';
+import { login, logout, selectUser } from './app/userSlice';
 import { useDispatch } from 'react-redux';
 import { auth } from './firebase';
 import PrivateRoute from './private/PrivateRoute';
 import Chat from './components/chat/Chat';
 import Footer from './components/footer/Footer';
 
+
 function App() {
-  // const user = useSelector(selectUser);
+  const user = useSelector(selectUser);
   const dispatch = useDispatch();
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
@@ -43,15 +44,15 @@ function App() {
           {/*Root Route - open for all*/}
           <Route exact path='/' element={<Posts />} />
 
-          {/*User Route - open for only logged in users*/}
-          <Route path='/user' element={<PrivateRoute />} >
-            <Route path='/user/create-post' element={<CreatePost />} />
-            <Route path='/user/view-post' element={<Viewpost />} />
-          </Route>
-
           {/*Auth Route - open for all for Authenticating*/}
-          <Route path='/auth' element={<Auth />} />
+          <Route exact path='/auth' element={<Auth />} />
 
+          <Route exact path='/view-post' element={<Viewpost />} />
+
+          {/*User Route - open for only logged in users*/}
+          <Route exact path='/user' element={<PrivateRoute />}>
+            <Route exact path='/user/create-post' element={<CreatePost />} />
+          </Route>
         </Routes>
         <Chat />
         <Footer />

@@ -20,3 +20,10 @@
 /meramot_front/npm-debug.log*
 /meramot_front/yarn-debug.log*
 /meramot_front/yarn-error.log*
+
+
+/meramot_back/.env
+/meramot_back/target
+/meramot_back/meramot_back.iml
+
+
