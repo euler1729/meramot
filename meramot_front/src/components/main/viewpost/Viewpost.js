@@ -15,7 +15,7 @@ function Viewpost() {
         <div className='main-top'>
           <h2 className='main-question'>Question Title</h2>
           {/* For making a new post  */}
-          <Link to='/create-post'>
+          <Link to='/user/create-post'>
             <button>Ask Question</button>
           </Link>
         </div>

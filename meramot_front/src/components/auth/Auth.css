@@ -51,6 +51,9 @@
 .google:hover{
     background-color: #cfcfcf;
 }
+.google>svg,.git>svg,.fb>svg{
+    margin-right: 10px;
+}
 .fb{
     background-color: #3b5998;
     color: #c9d1d9;
@@ -99,4 +102,11 @@
     background-color: transparent;
     border-radius: 3px;
     outline: none;
+}
+.formBtn{
+    display: flex;
+    justify-content: center;
+}
+.formBtn>button{
+    margin-top: 10px;
 }

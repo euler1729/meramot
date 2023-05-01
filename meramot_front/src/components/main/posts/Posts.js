@@ -12,7 +12,7 @@ function Posts() {
                 <div className='main-top'>
                     <h2>All Questions</h2>
                     {/* For making a new post  */}
-                    <Link to='/create-post'>
+                    <Link to='/user/create-post'>
                         <button>Ask Question</button>
                     </Link>
                 </div>
