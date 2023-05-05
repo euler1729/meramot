@@ -8,14 +8,6 @@ import axios from 'axios';
 
 function Posts() {
 
-    axios.post('http://localhost:8000/api/create-post', {})
-        .then(response => {
-            console.log(response.data)
-        }).catch(error => {
-            console.log(error)
-        });
-
-
     return (
         <div className='main'>
             <div className='main-container'>

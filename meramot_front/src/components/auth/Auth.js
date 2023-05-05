@@ -40,8 +40,8 @@ function Auth() {
     }
     const handleSignInFacebook = () => {
         signInWithPopup(auth, provider_facebook).then((res) => {
-            navigate('/');
             console.log(res);
+            navigate('/');
         }).catch((err) => {
             console.log(err);
             setError(err.message);
@@ -67,7 +67,6 @@ function Auth() {
             });
         }
     }
-
     const handleRegister = (e) => {
         e.preventDefault();
         setError('');

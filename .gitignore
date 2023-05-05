@@ -10,13 +10,11 @@
 /meramot_front/build
 
 # misc
-/meramot_front/.env
 /meramot_front/.DS_Store
 /meramot_front/.env.local
 /meramot_front/.env.development.local
 /meramot_front/.env.test.local
 /meramot_front/.env.production.local
-/meramot_front/
 /meramot_front/npm-debug.log*
 /meramot_front/yarn-debug.log*
 /meramot_front/yarn-error.log*

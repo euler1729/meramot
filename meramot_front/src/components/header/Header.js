@@ -42,7 +42,7 @@ function Header() {
   return (
     <header>
       <div className='header-container'>
-
+        {/* Logo */}
         <div className='header-left'>
           <Link to='/'>
             <img src={logo} alt='mermot' height="35" />
@@ -50,17 +50,18 @@ function Header() {
           <h3>Products</h3>
         </div>
 
+        {/*Search Bar*/}
         <div className='header-middle'>
           <div className='header-search-container'>
             <SearchIcon /><input type='text' placeholder='search...' />
           </div>
         </div>
 
-
+        {/*Profile Icon*/}
         <div className='header-right'>
           <div className='header-right-container'>
             <span onClick={handleClick}>
-              <Tooltip title={user? user.displayName:"Account"}>
+              <Tooltip title={user ? user.displayName : "Click to Login"}>
                 <IconButton
                   onClick={handleClick}
                   size="small"
@@ -75,6 +76,8 @@ function Header() {
             </span>
           </div>
         </div>
+
+        {/*Profile Menu - expands while we click profile pic*/}
         <Menu
           anchorEl={anchorEl}
           id="account-menu"
@@ -114,9 +117,9 @@ function Header() {
             user &&
             <MenuItem onClick={handleClose}>
               <ListItemIcon>
-                <Avatar src={user.photoUrl}/>
+                <Settings/>
               </ListItemIcon>
-              {user.displayName}
+              Account Settings
             </MenuItem>
           }
           {
