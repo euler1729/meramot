@@ -1,19 +1,28 @@
 package com.example.meramot_back.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
+@Data
 @Table(name = "categories")
 public class Categories {
-    @Id// ID of the post
-    @Column(name = "post_id", nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
+    @Column(name = "post_id", nullable = false, unique = false)
     private Long post_id;
     // Tag of the post
     @Column(name = "category")
     private String category;
+
+
+    public Categories() {
+    }
+    public Categories(Long post_id, String category) {
+        this.post_id = post_id;
+        this.category = category;
+    }
 
     public Long getUid() {
         return post_id;

@@ -61,7 +61,7 @@ function Header() {
         <div className='header-right'>
           <div className='header-right-container'>
             <span onClick={handleClick}>
-              <Tooltip title={user ? user.displayName : "Click to Login"}>
+              <Tooltip title={user ? user.name : "Click to Login"}>
                 <IconButton
                   onClick={handleClick}
                   size="small"

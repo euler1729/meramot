@@ -1,11 +1,13 @@
 package com.example.meramot_back.model;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
+@Data
 @Table(name = "comment")
 public class Comment {
     @Id//Comment Id

@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { TagsInput } from 'react-tag-input-component';
 import './CreatePost.css';
+import { useSelector } from 'react-redux';
+import { selectUser } from '../../../app/userSlice';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function CreatePost() {
+    const user = useSelector(selectUser);
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [tags, setTags] = useState([]);
+    const navigate = useNavigate();
 
     const handleTitleChange = (newTitle) => {
-        setTitle(newTitle);
+        setTitle(newTitle.target.value);
         console.log(title);
     }
     const handleBodyChange = (newBody) => {
@@ -21,6 +27,27 @@ function CreatePost() {
         setTags(newTags);
         console.log(tags);
     }
+    const handleSubmit = () => {
+        if (!title || !body || !tags) return alert('Please fill all the fields');
+        if (!user) return alert('Please login to post a problem');
+        console.log(user);
+        const post = {
+            title: title,
+            content: body,
+            tags: tags,
+            id: user.id,
+        }
+        console.log(post);
+        axios.post('http://localhost:8000/post/create', post)
+            .then((response) => {
+                console.log(response);
+                navigate('/');
+                return alert(response.data);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }
+
     return (
         <div className='create-post'>
             <div className='create-post-container'>
@@ -42,7 +69,7 @@ function CreatePost() {
                                         <small>Be specific and imaging you're asking a question to another person</small>
                                     </div>
                                     {/* POST BUTTON */}
-                                    <button className='button'>POST</button>
+                                    <button className='button' type='submit' onClick={handleSubmit}>POST</button>
                                 </div>
                                 <input
                                     onChange={handleTitleChange}

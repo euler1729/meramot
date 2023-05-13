@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter as Router, Routes, Route
 } from 'react-router-dom';
@@ -16,25 +16,42 @@ import { auth } from './firebase';
 import PrivateRoute from './private/PrivateRoute';
 import Chat from './components/chat/Chat';
 import Footer from './components/footer/Footer';
+import axios from 'axios';
 
 
 function App() {
+  // eslint-disable-next-line
   const user = useSelector(selectUser);
+  const [data, setData] = useState({});
   const dispatch = useDispatch();
+
+  const loginApiCall = async (usr) => {
+    try {
+      const response = await axios.post('http://localhost:8000/auth/login', usr);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   useEffect(() => {
-    auth.onAuthStateChanged((authUser) => {
-      console.log("In App.js useEffect\n",authUser);
+    auth.onAuthStateChanged(async (authUser) => {
       if (authUser) {
-        dispatch(login({
+        const dataa = await loginApiCall({ email: authUser.email, password: "fadfasd" });
+        setData(dataa);
+        const userr = {
           email: authUser.email,
           uid: authUser.uid,
-          displayName: authUser.displayName,
+          name: authUser.displayName,
           photoUrl: authUser.photoURL,
-        }))
+          id: dataa.id,
+          role: dataa.role,
+        };
+        console.log(userr);
+        dispatch(login(userr));
       } else {
         dispatch(logout());
       }
-    })
+    });
   }, [dispatch]);
 
   return (

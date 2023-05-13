@@ -1,12 +1,21 @@
 import { FilterList } from '@mui/icons-material';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Posts.css';
-import AllPosts from './AllPosts';
+import SinglePost from './SinglePost';
 import axios from 'axios';
 
 
 function Posts() {
+    const [posts, setPosts] = useState([]);
+    useEffect(() => {
+        axios.get('http://localhost:8000/post/all')
+            .then((response) => {
+                setPosts(response.data);
+            }).catch((error) => {
+                console.log(error);
+            });
+    }, []);
 
     return (
         <div className='main'>
@@ -50,10 +59,14 @@ function Posts() {
                 {/*All post indicates posts by all users */}
                 <div className='posts'>
                     <div className='post'>
-                        <AllPosts />
-                        <AllPosts />
-                        <AllPosts />
-                        <AllPosts />
+                        {
+                            posts.map((post,i) => (
+                                <SinglePost
+                                    key={i}
+                                    post={post}
+                                />
+                            ))
+                        }
                     </div>
                 </div>
             </div>
