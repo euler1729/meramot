@@ -3,14 +3,9 @@ import sendIcon from "./res/sendIcon.svg";
 import CloseIcon from '@mui/icons-material/Close';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import "./Chat.css";
-
-const generateMessage = () => {
-    const words = ["The sky", "above", "the port", "was", "the color of television", "tuned", "to", "a dead channel", ".", "All", "this happened", "more or less", ".", "I", "had", "the story", "bit by bit", "from various people", "and", "as generally", "happens", "in such cases", "each time", "it", "was", "a different story", ".", "It", "was", "a pleasure", "to", "burn"];
-    const text = [];
-    let x = 7;
-    while (--x) text.push(words[Math.floor(Math.random() * words.length)]);
-    return text.join(" ");
-}
+import { TextField } from "@mui/material";
+import axios from 'axios';
+import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
 
 function Chat() {
     const [isOpen, setIsOpen] = useState(false);
@@ -20,6 +15,7 @@ function Chat() {
     }
     const messageEl = useRef(null);
     const [messages, setMessages] = useState([]);
+    const [txt, setTxt] = useState('');
 
     useEffect(() => {
         if (messageEl) {
@@ -29,34 +25,76 @@ function Chat() {
             });
         }
     }, [])
+    const handleSubmit = (e) => {
 
-    useEffect(() => {
-        const generateDummyMessage = () => {
-            setInterval(() => {
-                setMessages(prevMsg => [...prevMsg, generateMessage()]);
-            }, 10000);
+        e.preventDefault();
+        if (txt.length < 1) return;
+        const formData = new FormData(e.target);
+
+        if (txt) {
+            setMessages(prevMsg => [...prevMsg, {
+                role: 'user',
+                content: formData.get('prompt')
+            }]);
+
+            axios.post('http://localhost:8000/chat/send', [...messages, {role:"user", content: formData.get('prompt')}])
+                .then((response) => {
+                    console.log(response.data.message);
+                    setMessages(prevMsg=>[...prevMsg,{
+                        role:response.data?.message?.role,
+                        content: response.data?.message?.content
+                    }])
+                }).catch((err) => {
+                    console.log(err);
+                })
+
+            e.target[0].value = '';
+            setTxt('');
         }
-        generateDummyMessage();
-    }, []);
-
+    }
+    const handleChange = (e) => {
+        setTxt(e.target.value);
+        console.log(txt);
+    }
 
     return (
         <div className="popup-chat">
             <div className={`chat-modal ${isOpen ? 'open' : ''}`}>
+                {/*Chat Top Bar*/}
                 <div className="head">
-                    <h3>Expart</h3>
+                    <h3>
+                        Chat With Expert 
+                        {/* <FiberManualRecordRoundedIcon style={{color:"#90EE90"}}/> */}
+                    </h3>
                     <CloseIcon onClick={toggleChat} style={{ cursor: "pointer" }} />
                 </div>
+
+                {/*Messages*/}
                 <div className="messages" ref={messageEl}>
-                    {messages.map((m, i) =>
-                        <div key={i} className={`msg${i % 2 !== 0 ? ' dark' : ''}`}>
-                            {m}
-                        </div>)}
+                    {
+                        messages.map(
+                            (m, i) =>
+                                <div key={i} className={`msg${m.role === 'user' ? ' dark' : ''}`}>
+                                    {m.content}
+                                </div>
+                        )
+                    }
                 </div>
-                <div className="footer">
-                    <input type="text" placeholder="Type here..." />
-                    <img alt="send" src={sendIcon} />
-                </div>
+
+                {/*Text Input*/}
+                <form onSubmit={handleSubmit}>
+                    <div className="footer">
+                        <TextField
+                            name='prompt'
+                            fullWidth
+                            label='Write here...'
+                            value={txt}
+                            onChange={handleChange} />
+                        <button type='submit'>
+                            <img alt="send" src={sendIcon} />
+                        </button>
+                    </div>
+                </form>
             </div>
             <button id="floating-button" onClick={toggleChat}>
                 <ChatBubbleIcon />

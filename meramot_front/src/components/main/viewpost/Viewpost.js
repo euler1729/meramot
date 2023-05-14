@@ -10,7 +10,6 @@ import axios from 'axios';
 import parse from 'react-html-parser';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../app/userSlice';
-import { current } from '@reduxjs/toolkit';
 
 function Viewpost() {
   const user = useSelector(selectUser)
@@ -36,13 +35,11 @@ function Viewpost() {
       .then((response) => {
         setData(response.data);
         setComments( response.data.solutions);
-        setPostVote( response.data.post?.vote);
+        setPostVote( response.data.postVote);
       }).catch((error) => {
         console.log(error);
       });
   }
-
-
 
   const handlePostVote = async (vote) => {
     if (!isLoggedIn()) return alert('Please login to vote');
@@ -55,7 +52,6 @@ function Viewpost() {
       .then((response) => {
         axios.post(`http://localhost:8000/post/vote-info`, voteInfo)
           .then((response) => {
-            console.log(response.data);
             setPostVote(response.data);
           })
       }).catch((error) => {
@@ -73,7 +69,6 @@ function Viewpost() {
     }
     axios.post(`http://localhost:8000/post/vote-comment`, voteInfo)
       .then((response) => {
-        console.log(response);
         getComments();
       }).catch((error) => {
         console.log(error);
@@ -97,7 +92,6 @@ function Viewpost() {
   // handles answer input
   const handleAnswerChange = (newAnswer) => {
     setAnswer(newAnswer);
-    console.log(answer);
   }
 
   // handles answer submit
@@ -113,7 +107,6 @@ function Viewpost() {
     console.log(commentInfo);
     axios.post(`http://localhost:8000/post/do-comment`, commentInfo)
       .then((response) => {
-        // console.log(response);
         getComments().then(() => {
           setAnswer('');
         });
@@ -253,6 +246,7 @@ function Viewpost() {
                         <History />
                       </div>
                     </div>
+                    
                     <div className='post-body'>
                       {/* Comment Body */}
                       <div style={{ width: "90%" }}>

@@ -6,7 +6,7 @@ import parse from 'react-html-parser';
 
 function SinglePost(props) {
     const post = props.post;
-    console.log(post);
+    // console.log(post);
     function truncate(str, n) {
         return str?.length > n ? str.substr(0, n - 1) + "..." : str;
     }

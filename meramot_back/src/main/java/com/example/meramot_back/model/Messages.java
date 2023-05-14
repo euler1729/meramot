@@ -25,11 +25,17 @@ public class Messages {
     private UUID sender_id;
     @Column(name = "timestamp")
     private Timestamp timestamp;
+    private String role;
 
+    public void setRole(String role) {
+        this.role = role;
+    }
+    public String getRole() {
+        return role;
+    }
     public Long getMid() {
         return mid;
     }
-
     public void setMid(Long mid) {
         this.mid = mid;
     }
@@ -69,6 +75,7 @@ public class Messages {
     @Override
     public String toString() {
         return "Messages{" +
+                "role='" + role + '\'' +
                 "mid=" + mid +
                 ", chat_id=" + chat_id +
                 ", message='" + message + '\'' +
