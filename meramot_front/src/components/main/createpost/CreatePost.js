@@ -17,30 +17,30 @@ function CreatePost() {
 
     const handleTitleChange = (newTitle) => {
         setTitle(newTitle.target.value);
-        console.log(title);
+        // console.log(title);
     }
     const handleBodyChange = (newBody) => {
         setBody(newBody);
-        console.log(body);
+        // console.log(body);
     }
     const handleTagChange = (newTags) => {
         setTags(newTags);
-        console.log(tags);
+        // console.log(tags);
     }
     const handleSubmit = () => {
         if (!title || !body || !tags) return alert('Please fill all the fields');
         if (!user) return alert('Please login to post a problem');
-        console.log(user);
+        // console.log(user);
         const post = {
             title: title,
             content: body,
             tags: tags,
             id: user.id,
         }
-        console.log(post);
+        // console.log(post);
         axios.post('http://localhost:8000/post/create', post)
             .then((response) => {
-                console.log(response);
+                // console.log(response);
                 navigate('/');
                 return alert(response.data);
             }).catch((error) => {

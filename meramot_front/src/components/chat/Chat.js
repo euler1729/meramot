@@ -39,7 +39,7 @@ function Chat() {
 
             axios.post('http://localhost:8000/chat/send', [...messages, {role:"user", content: formData.get('prompt')}])
                 .then((response) => {
-                    console.log(response.data.message);
+                    // console.log(response.data.message);
                     setMessages(prevMsg=>[...prevMsg,{
                         role:response.data?.message?.role,
                         content: response.data?.message?.content
@@ -54,7 +54,7 @@ function Chat() {
     }
     const handleChange = (e) => {
         setTxt(e.target.value);
-        console.log(txt);
+        // console.log(txt);
     }
 
     return (

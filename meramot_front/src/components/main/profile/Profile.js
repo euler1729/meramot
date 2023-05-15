@@ -21,7 +21,7 @@ function Profile() {
   useEffect(() => {
     axios.post('http://localhost:8000/auth/profile', { uid: user.id })
       .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setData(response.data)
       }).catch(err=>{
         console.log(err);

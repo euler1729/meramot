@@ -96,7 +96,7 @@ function Viewpost() {
 
   // handles answer submit
   const handleAnswerSubmit = async () => {
-    console.log(isLoggedIn());
+    // console.log(isLoggedIn());
     if (!isLoggedIn()) return alert('Please login to post a comment');
     if (!answer) return alert('Please fill all the fields');
     const commentInfo = {
@@ -117,7 +117,7 @@ function Viewpost() {
 
   // checks whether the user is logged in or not
   const isLoggedIn = () => {
-    console.log(user)
+    // console.log(user)
     if (!user) return false;
     if (typeof user.id === 'undefined') return false;
     return true;
