@@ -48,7 +48,7 @@ function SinglePost(props) {
                             <Avatar src={post ? post.authorPic : ''} />
                             <p>{post.authorName}</p>
                         </div>
-                        <small>{post.post.timestamp}</small>
+                        <small>{new Date(post.post.timestamp).toLocaleString('en-US')}</small>
                     </div>
                 </div>
             </div>

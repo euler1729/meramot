@@ -17,42 +17,42 @@ import PrivateRoute from './private/PrivateRoute';
 import Chat from './components/chat/Chat';
 import Footer from './components/footer/Footer';
 import axios from 'axios';
+import Profile from './components/main/profile/Profile';
 
 
 function App() {
   // eslint-disable-next-line
   const user = useSelector(selectUser);
-  const [data, setData] = useState({});
   const dispatch = useDispatch();
+  const [data, setData] = useState({});
 
-  const loginApiCall = async (usr) => {
-    try {
-      const response = await axios.post('http://localhost:8000/auth/login', usr);
-      return response.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
   useEffect(() => {
-    auth.onAuthStateChanged(async (authUser) => {
+    auth.onAuthStateChanged((authUser) => {
+      console.log(authUser);
       if (authUser) {
-        const dataa = await loginApiCall({ email: authUser.email, password: "fadfasd" });
-        setData(dataa);
-        const userr = {
+        axios.post('http://localhost:8000/auth/login', {
           email: authUser.email,
           uid: authUser.uid,
           name: authUser.displayName,
-          photoUrl: authUser.photoURL,
-          id: dataa.id,
-          role: dataa.role,
-        };
-        console.log(userr);
-        dispatch(login(userr));
+          photoURL: authUser.photoURL,
+          password: "fadfasd"
+        }).then((response) => {
+          dispatch(login({
+            email: authUser.email,
+            uid: authUser.uid,
+            name: authUser.displayName,
+            photoURL: authUser.photoURL,
+            id: response.data.id,
+            role: response.data.role
+          }));
+        }).catch(err => {
+          console.log(err);
+        })
       } else {
         dispatch(logout());
       }
     });
-  }, [dispatch]);
+  }, []);
 
   return (
     <div className="App">
@@ -70,7 +70,11 @@ function App() {
           {/*User Route - open for only logged in users*/}
           <Route exact path='/user' element={<PrivateRoute />}>
             <Route exact path='/user/create-post' element={<CreatePost />} />
+            <Route exact path='/user/profile' element={<Profile/>}/>
           </Route>
+          {/* <Route exact path='/user' element={<PrivateRoute />}>
+            <Route exact path='/user/profile' element={<Profile/>}/>
+          </Route> */}
         </Routes>
         <Chat />
         <Footer />

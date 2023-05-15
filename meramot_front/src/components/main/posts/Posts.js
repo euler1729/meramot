@@ -4,18 +4,65 @@ import { Link } from 'react-router-dom';
 import './Posts.css';
 import SinglePost from './SinglePost';
 import axios from 'axios';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 
 function Posts() {
     const [posts, setPosts] = useState([]);
+    const [posts2, setPosts2] = useState([]);
+    const [asc_time, setAscTime] = useState(false);
+    const [asc_vote, setAscVote] = useState(false);
+    const [asc_ans, setAscAns] = useState(false);
+    const [filter, setFilter] = useState(false);
     useEffect(() => {
         axios.get('http://localhost:8000/post/all')
             .then((response) => {
+                console.log(response.data)
                 setPosts(response.data);
+                setPosts2(response.data)
             }).catch((error) => {
                 console.log(error);
             });
     }, []);
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        console.log(e.target.value);
+
+    }
+
+    const handleFilterClick = () => {
+        setFilter(!filter);
+    }
+
+    const sortByTime = () => {
+        if (asc_time) {
+            setAscTime(!asc_time);
+            posts.sort((a, b) => new Date(b.post.timestamp) - new Date(a.post.timestamp));
+        } else {
+            setAscTime(!asc_time);
+            posts.sort((a, b) => new Date(a.post.timestamp) - new Date(b.post.timestamp));
+        }
+    }
+    const sortByVote = () => {
+        if (asc_vote) {
+            setAscVote(!asc_vote);
+            posts.sort((a, b) => (b.post.vote) - (a.post.vote));
+        } else {
+            setAscVote(!asc_vote);
+            posts.sort((a, b) => (a.post.vote) - (b.post.vote));
+        }
+    }
+    const sortByAns = () => {
+        if (asc_ans) {
+            setAscAns(!asc_ans);
+            posts.sort((a, b) => (b.answerCnt) - (a.answerCnt));
+        } else {
+            setAscAns(!asc_ans);
+            posts.sort((a, b) => (a.answerCnt) - (b.answerCnt));
+        }
+    }
 
     return (
         <div className='main'>
@@ -31,26 +78,30 @@ function Posts() {
 
                 {/* for sorting and filtering posts*/}
                 <div className='main-desc'>
-                    <p>Number of Question </p>
+                    <p>Number of Question {posts.length}</p>
                     <div className='main-filter'>
                         <div className='main-tabs'>
                             {/* for newest posts */}
-                            <div className='main-tab'>
-                                <Link>Newest</Link>
+                            <div className='main-tab' >
+                                <button onClick={sortByTime}>{asc_time ? 'Newest' : 'Oldest'}</button>
                             </div>
                             {/* for most active posts */}
                             <div className='main-tab'>
-                                <Link>Active</Link>
+                                <button onClick={sortByVote}>{asc_vote ? 'Most Voted' : 'Least Voted'}</button>
                             </div>
                             {/* for more posts */}
-                            <div className='main-tab'>
-                                <Link>More</Link>
+                            <div className='main-tab' >
+                                <button onClick={sortByAns}>{asc_ans ? 'Most Answered' : 'Least Answerd'}</button>
                             </div>
                         </div>
                         {/* for filtering posts */}
-                        <div className='main-filter-item'>
-                            <FilterList />
-                            <p>Filter</p>
+                        <div className='filter'>
+                            <div className='main-filter-item'>
+                                <FilterList onClick={handleFilterClick} />
+                                <p>Filter</p>
+
+                            </div>
+                            {filter && <SearchIcon /> && <input type='text' placeholder='search...' onChange={handleSearch} />}
                         </div>
                     </div>
                 </div>
@@ -60,7 +111,7 @@ function Posts() {
                 <div className='posts'>
                     <div className='post'>
                         {
-                            posts.map((post,i) => (
+                            posts.map((post, i) => (
                                 <SinglePost
                                     key={i}
                                     post={post}

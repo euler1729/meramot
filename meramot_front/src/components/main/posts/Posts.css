@@ -44,6 +44,10 @@ button{
     display: flex;
     align-items: center;
 }
+.filter{
+    display: flex;
+    flex-direction: column;
+}
 .main-tabs{
     display: flex;
     border: 1px solid #2d364c;
@@ -56,6 +60,7 @@ button{
 .main-filter-item{
     display: flex;
     padding: 5px;
+    flex-direction: column;
     border: 1px solid #0095ff;
     border-radius: 3px;
     background-color: #0095ff;

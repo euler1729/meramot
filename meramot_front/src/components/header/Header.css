@@ -1,16 +1,16 @@
 header{
     /* max-width: fit-content; */
-    display: flex;
+    /* display: flex; */
     position: sticky;
     top: 0px;
     z-index: 100000;
     min-height: 5vh;
-    /* width: 100%; */
+    width: 100vw;
 }
 .header-container{
     display: flex;
     flex-direction: row;
-    width: 100%;
+    width: 100vw;
     align-items: center;
     justify-content: space-evenly;
     background-color: rgba(250,250,250);

@@ -27,6 +27,7 @@ function Header() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+    navigate('/user/profile');
   };
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -47,13 +48,13 @@ function Header() {
           <Link to='/'>
             <img src={logo} alt='mermot' height="35" />
           </Link>
-          <h3>Products</h3>
+          {/* <h3>Products</h3> */}
         </div>
 
         {/*Search Bar*/}
         <div className='header-middle'>
           <div className='header-search-container'>
-            <SearchIcon /><input type='text' placeholder='search...' />
+            {/* <SearchIcon /><input type='text' placeholder='search...' /> */}
           </div>
         </div>
 
@@ -70,7 +71,7 @@ function Header() {
                   aria-haspopup="true"
                   aria-expanded={open ? 'true' : undefined}
                 >
-                  <Avatar src={user ? user.photoUrl : ''} />
+                  <Avatar src={user ? user.photoURL : ''} />
                 </IconButton>
               </Tooltip>
             </span>
@@ -117,7 +118,9 @@ function Header() {
             user &&
             <MenuItem onClick={handleClose}>
               <ListItemIcon>
-                <Settings/>
+                <Link to='/user/profile'>
+                  <Settings/>
+                </Link>
               </ListItemIcon>
               Account Settings
             </MenuItem>

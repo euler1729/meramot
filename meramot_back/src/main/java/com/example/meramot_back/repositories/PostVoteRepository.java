@@ -31,4 +31,6 @@ public interface PostVoteRepository extends JpaRepository<PostVote, Long> {
     @Query("SELECT COUNT(*) FROM PostVote pv WHERE pv.post_id = :post_id AND pv.uid = :uid")
     int getPostVoteCntByPostIdAndUserIdAndPost_id(@Param("post_id") Integer post_id, @Param("uid") UUID uid);
 
+    @Query("SELECT COUNT(*) FROM PostVote pv WHERE pv.uid = :uid")
+    int getPostVoteCntByUid(UUID uid);
 }

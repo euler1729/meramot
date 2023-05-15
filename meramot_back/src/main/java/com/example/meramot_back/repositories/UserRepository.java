@@ -12,6 +12,11 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
     @Query("SELECT u FROM User u WHERE u.email = ?1")
     User getReferenceByEmail(String email);
+
     @Query("SELECT u FROM User u WHERE u.uid = ?1")
     User getReferenceByUser_id(UUID uid);
+
+    @Query("SELECT count(u) FROM User u WHERE u.email = ?1")
+    int countByEmail(String email);
+
 }
