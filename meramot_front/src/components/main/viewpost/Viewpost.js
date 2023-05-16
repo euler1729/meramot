@@ -6,10 +6,10 @@ import { Avatar } from '@mui/material';
 import "react-quill/dist/quill.snow.css";
 import ReactQuill from 'react-quill';
 import './Viewpost.css'
-import axios from 'axios';
 import parse from 'react-html-parser';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../app/userSlice';
+import API from '../../../api/api';
 
 function Viewpost() {
   const user = useSelector(selectUser)
@@ -31,7 +31,7 @@ function Viewpost() {
       post_id: post_id,
       uid: user?.id,
     }
-    axios.post(`http://localhost:8000/post/get-post`, payload)
+    API.post(`/post/get-post`, payload)
       .then((response) => {
         setData(response.data);
         setComments( response.data.solutions);
@@ -48,9 +48,9 @@ function Viewpost() {
       post_id: post_id,
       vote: vote,
     }
-    axios.post(`http://localhost:8000/post/vote-post`, voteInfo)
+    API.post(`/post/vote-post`, voteInfo)
       .then((response) => {
-        axios.post(`http://localhost:8000/post/vote-info`, voteInfo)
+        API.post(`/post/vote-info`, voteInfo)
           .then((response) => {
             setPostVote(response.data);
           })
@@ -67,7 +67,7 @@ function Viewpost() {
       uid: user?.id,
       vote: vote,
     }
-    axios.post(`http://localhost:8000/post/vote-comment`, voteInfo)
+    API.post(`/post/vote-comment`, voteInfo)
       .then((response) => {
         getComments();
       }).catch((error) => {
@@ -81,7 +81,7 @@ function Viewpost() {
       post_id: post_id,
       uid: user?.id,
     }
-    axios.post(`http://localhost:8000/post/get-comments`, payload)
+    API.post(`/post/get-comments`, payload)
       .then((response) => {
         setComments(response.data);
       }).catch((error) => {
@@ -105,7 +105,7 @@ function Viewpost() {
       content: answer,
     }
     console.log(commentInfo);
-    axios.post(`http://localhost:8000/post/do-comment`, commentInfo)
+    API.post(`/post/do-comment`, commentInfo)
       .then((response) => {
         getComments().then(() => {
           setAnswer('');

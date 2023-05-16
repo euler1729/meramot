@@ -1,7 +1,6 @@
 .stack-index{
     display: flex;
-    min-height: 85vh;
-    min-width: fit-content;
+    width: 100%;
 }
 .stack-index-content{
     display: flex;

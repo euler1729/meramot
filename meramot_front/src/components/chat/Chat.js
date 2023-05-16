@@ -4,8 +4,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import "./Chat.css";
 import { TextField } from "@mui/material";
-import axios from 'axios';
-import FiberManualRecordRoundedIcon from '@mui/icons-material/FiberManualRecordRounded';
+import API from "../../api/api";
 
 function Chat() {
     const [isOpen, setIsOpen] = useState(false);
@@ -25,8 +24,8 @@ function Chat() {
             });
         }
     }, [])
-    const handleSubmit = (e) => {
 
+    const handleSubmit = (e) => {
         e.preventDefault();
         if (txt.length < 1) return;
         const formData = new FormData(e.target);
@@ -37,7 +36,7 @@ function Chat() {
                 content: formData.get('prompt')
             }]);
 
-            axios.post('http://localhost:8000/chat/send', [...messages, {role:"user", content: formData.get('prompt')}])
+            API.post('/chat/send', [...messages, {role:"user", content: formData.get('prompt')}])
                 .then((response) => {
                     // console.log(response.data.message);
                     setMessages(prevMsg=>[...prevMsg,{

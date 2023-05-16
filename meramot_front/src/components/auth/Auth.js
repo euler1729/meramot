@@ -6,12 +6,8 @@ import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword
 } from 'firebase/auth';
-import { auth, provider, provider_github, provider_facebook } from '../../firebase';
+import { auth, provider, provider_github, provider_facebook } from '../../api/firebase';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { login, logout, selectUser } from '../../app/userSlice';
-import axios from 'axios';
-
 
 function Auth() {
     const [register, setRegister] = React.useState(false);
@@ -20,14 +16,12 @@ function Auth() {
     const [name, setName] = React.useState('');
     const [loading, setLoading] = React.useState(false);
     const [error, setError] = React.useState('');
-    const user = useSelector(selectUser);
-    const dispatch = useDispatch();
-
+    
     const navigate = useNavigate();
 
     const handleSignInGoogle = () => {
         signInWithPopup(auth, provider).then((res) => {
-            console.log(res);
+            // console.log(res);
             navigate('/');
         }).catch((err) => {
             console.log(err);
@@ -36,13 +30,7 @@ function Auth() {
     }
     const handleSignInGithub = () => {
         signInWithPopup(auth, provider_github).then((res) => {
-            console.log(res);
-            dispatch(login({
-                email: res.email,
-                uid: res.uid,
-                name: res.displayName,
-                photoURL: res.photoURL,
-            }))
+            // console.log(res);
             navigate('/');
         }).catch((err) => {
             console.log(err);
@@ -51,13 +39,7 @@ function Auth() {
     }
     const handleSignInFacebook = () => {
         signInWithPopup(auth, provider_facebook).then((res) => {
-            console.log(res);
-            dispatch(login({
-                email: res.email,
-                uid: res.uid,
-                name: res.displayName,
-                photoURL: res.photoURL,
-            }))
+            // console.log(res);
             navigate('/');
         }).catch((err) => {
             console.log(err);

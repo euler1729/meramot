@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   BrowserRouter as Router, Routes, Route
 } from 'react-router-dom';
@@ -9,28 +9,23 @@ import Posts from './components/main/posts/index';
 import CreatePost from './components/main/createpost/CreatePost';
 import Viewpost from './components/main/viewpost/index';
 import Auth from './components/auth/Auth';
-import { useSelector } from 'react-redux';
-import { login, logout, selectUser } from './app/userSlice';
+import { login, logout } from './app/userSlice';
 import { useDispatch } from 'react-redux';
-import { auth } from './firebase';
+import { auth } from './api/firebase';
 import PrivateRoute from './private/PrivateRoute';
 import Chat from './components/chat/Chat';
 import Footer from './components/footer/Footer';
-import axios from 'axios';
 import Profile from './components/main/profile/Profile';
-
+import API from './api/api';
 
 function App() {
-  // eslint-disable-next-line
-  const user = useSelector(selectUser);
   const dispatch = useDispatch();
-  const [data, setData] = useState({});
 
   useEffect(() => {
     auth.onAuthStateChanged((authUser) => {
       console.log(authUser);
       if (authUser) {
-        axios.post('http://localhost:8000/auth/login', {
+        API.post('/auth/login', {
           email: authUser.email,
           uid: authUser.uid,
           name: authUser.displayName,

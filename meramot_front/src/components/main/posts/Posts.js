@@ -3,9 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Posts.css';
 import SinglePost from './SinglePost';
-import axios from 'axios';
 import SearchIcon from '@mui/icons-material/Search';
-
+import API from '../../../api/api';
 
 
 function Posts() {
@@ -16,7 +15,7 @@ function Posts() {
     const [asc_ans, setAscAns] = useState(false);
     const [filter, setFilter] = useState(false);
     useEffect(() => {
-        axios.get('http://localhost:8000/post/all')
+        API.get('/post/all')
             .then((response) => {
                 // console.log(response.data)
                 setPosts(response.data);
@@ -29,7 +28,7 @@ function Posts() {
     const handleSearch = (e) => {
         e.preventDefault();
         // console.log(e.target.value+" "+e.target.value.length);
-        if(e.target.value.length==0){
+        if(e.target.value.length===0){
             setPosts(posts2);
             return;
         }
@@ -44,7 +43,7 @@ function Posts() {
 
                 for(var j=0; j<filtr.length && f; ++j){
 
-                    if(filtr[j]!=tag[j]){
+                    if(filtr[j]!==tag[j]){
                         // console.log(filtr[j]+" "+tag[j]);
                         f = false;
                         break;
@@ -56,6 +55,7 @@ function Posts() {
                     break;
                 }
             }
+            return post3
         })
         // console.log(post3)
         setPosts(post3);

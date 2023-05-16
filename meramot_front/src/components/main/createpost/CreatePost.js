@@ -5,8 +5,9 @@ import { TagsInput } from 'react-tag-input-component';
 import './CreatePost.css';
 import { useSelector } from 'react-redux';
 import { selectUser } from '../../../app/userSlice';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import API from '../../../api/api';
+
 
 function CreatePost() {
     const user = useSelector(selectUser);
@@ -38,7 +39,7 @@ function CreatePost() {
             id: user.id,
         }
         // console.log(post);
-        axios.post('http://localhost:8000/post/create', post)
+        API.post('/post/create', post)
             .then((response) => {
                 // console.log(response);
                 navigate('/');

@@ -2,27 +2,30 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import UserProfile from 'react-user-profile';
 import { selectUser } from '../../../app/userSlice';
-import axios from 'axios';
+import API from '../../../api/api';
 
 function Profile() {
   const user = useSelector(selectUser);
   const [data, setData] = useState({});
-  const location = 'Dhaka, BD'
+  const location = 'Dhaka, BD';
+  const [comments, setComments] = useState([]);
 
-  // const comments = [
-  //   {
-  //     id: '1',
-  //     photo: 'https://api-cdn.spott.tv/rest/v004/image/images/e91f9cad-a70c-4f75-9db4-6508c37cd3c0?width=587&height=599',
-  //     userName: 'Mike Ross',
-  //     content: 'Lorem ipsum dolor sit amet enim. Etiam ullamcorper. Suspendisse a pellentesque dui, non felis. Maecenas malesuada elit lectus felis, malesuada ultricies. Curabitur et ligula. ',
-  //     createdAt: 1543858000000
-  //   }
-  // ]
   useEffect(() => {
-    axios.post('http://localhost:8000/auth/profile', { uid: user.id })
+    API.post('/auth/profile', { uid: user.id })
       .then((response) => {
-          // console.log(response.data);
-          setData(response.data)
+          console.log(response.data);
+          setData(response.data);
+          setComments([]);
+          response.data.comments.map((comment) => {
+            setComments(comments => [...comments, {
+              id: comment.id+'',
+              photo: user.photoURL,
+              userName: user.name,
+              content: comment.content,
+              createdAt: new Date(comment.timestamp).getMilliseconds()
+            }]);
+            
+          });
       }).catch(err=>{
         console.log(err);
       })
@@ -36,7 +39,8 @@ function Profile() {
         initialLikesCount={data.voteCnt}
         // initialFollowingCount={723}
         // initialFollowersCount={4433}
-        initialComments={data.comments} />
+        initialComments={comments} 
+        />
     </div>
   )
 }

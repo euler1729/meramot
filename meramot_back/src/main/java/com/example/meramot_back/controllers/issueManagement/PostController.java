@@ -48,7 +48,7 @@ public class PostController {
         ArrayList<Post> posts = (ArrayList<Post>) postRepository.findAll();
         ArrayList<Categories> tags = (ArrayList<Categories>) categoriesRepository.findAll();
         ArrayList<AllPost> allPosts = new ArrayList<>();
-
+        posts.sort((o1, o2) -> o2.getVote().compareTo(o1.getVote()));
         for (Post post : posts) {
             AllPost allPost = new AllPost();
             allPost.setPost(post);

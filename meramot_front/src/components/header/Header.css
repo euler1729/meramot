@@ -1,11 +1,8 @@
 header{
-    /* max-width: fit-content; */
-    /* display: flex; */
     position: sticky;
     top: 0px;
     z-index: 100000;
-    min-height: 5vh;
-    width: 100vw;
+    width: 100vw!important;
 }
 .header-container{
     display: flex;
@@ -24,7 +21,7 @@ header{
     margin-top: 0 10px;
 }
 .header-left >img {
-    width: 150px;
+    width: auto;
     object-fit: contain;
     padding: 0;
     cursor: pointer;
